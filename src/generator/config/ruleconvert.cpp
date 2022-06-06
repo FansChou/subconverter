@@ -337,7 +337,7 @@ void rulesetToSurge(INIReader &base_rule, std::vector<RulesetContent> &ruleset_c
             }
             else if(isLink(rule_path))
             {
-                if(surge_ver > 2)
+                if(surge_ver > 2 || surge_ver == -3)
                 {
                     if(x.rule_type != RULESET_SURGE)
                     {

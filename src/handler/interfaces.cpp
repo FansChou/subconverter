@@ -184,6 +184,7 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
     std::string strLine;
     std::stringstream ss;
     const std::string rule_match_regex = "^(.*?,.*?)(,.*)(,.*)$";
+    const std::string clash_ipcidr_rule_match_regex = "^(.*?,.*?)(,.*)$";
 
     ss << output_content;
     char delimiter = getLineBreak(output_content);
@@ -279,6 +280,14 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
                     strLine = regReplace(strLine, rule_match_regex, "$1$3$2");
                 else
                     strLine = regReplace(strLine, rule_match_regex, "$1$3");
+            }
+            if(type_int == 6)
+            {
+                if(startsWith(strLine, "IP-CIDR")){    
+                    if(count_least(strLine, ',', 2) && regReplace(strLine, clash_ipcidr_rule_match_regex, "$2") == ",no-resolve")
+                        strLine = regReplace(strLine, clash_ipcidr_rule_match_regex, "$1");
+                }
+                
             }
         }
         output_content += strLine;
